@@ -16,14 +16,8 @@ url = "https://fbref.com/en/comps/9/stats/Premier-League-Stats"
 driver.get(url)
 
 
-# try:
-#     element = WebDriverWait(driver, 10).until(
-#         EC.element_to_be_clickable((By.XPATH, '//*[@id="qc-cmp2-ui"]/div[2]/div/button[3]')).ENTER()
-#     )
+# def pretty_printing(stat):
     
-# except:
-#     driver.quit()
-
 
 element = driver.find_element_by_xpath('//*[@id="qc-cmp2-ui"]/div[2]/div/button[3]')
 driver.execute_script("arguments[0].click();", element)
@@ -41,7 +35,7 @@ time.sleep(2)
 
 user_search = input("""
 
-Input a player name to see their historical data:
+Input a player name to see their performace data per 90 minutes:
 
 """)
 
@@ -57,30 +51,38 @@ player_pos_XPATH = driver.find_element_by_xpath('//*[@id="meta"]/div[2]')
 
 print(player_pos_XPATH.text)
 
-if 'Position: FW' in player_pos_XPATH.text:
+if 'Position: FW' in player_pos_XPATH.text and 'MF' not in player_pos_XPATH.text:
     player_pos = 'FW'
-elif 'Position: MF' in player_pos_XPATH.text:
+elif 'Position: MF' in player_pos_XPATH.text and 'FW' not in player_pos_XPATH.text:
     player_pos = 'MF'
-elif 'Position: DF' in player_pos_XPATH.text:
-    player_pos = 'DF'
+elif 'MF' and 'FW' in player_pos_XPATH.text:
+    player_pos = 'AM'
+elif 'DF' in player_pos_XPATH.text and 'FB' not in player_pos_XPATH.text:
+    player_pos = 'CB'
+elif 'DF' and 'FB' in player_pos_XPATH.text:
+    player_pos = 'FB'
 else:
     print("Couldn't assign position")
 
-
+print(player_pos)
     
+performance_stats = []
+
 for i in range(1, 22):
     player_data_rows = driver.find_elements_by_xpath(f'//*[@id="scout_summary_{player_pos}"]/tbody/tr[{i}]')
     for stat in player_data_rows:
         print(stat.text)
+        performance_stats.append(stat.text)
 
 
-
-
+# //*[@id="scout_summary_CB"]/tbody/tr[1]/th
+# //*[@id="scout_summary_FB"]/tbody/tr[1]/th
 # search.send_keys('test')
 # search.send_keys(Keys.ENTER)
 
 # print(search.text)
+# //*[@id="scout_summary_AM"]/tbody/tr[1]/th
 
-# time.sleep(3)
+time.sleep(3)
 
-# driver.quit()
+driver.quit()
