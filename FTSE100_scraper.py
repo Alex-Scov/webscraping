@@ -1,9 +1,12 @@
 # import relevant libraries
 
 import requests
+import pymysql
 import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
+from datetime import date
+
 
 # create empty lists for data to be appended into.
 
@@ -56,3 +59,31 @@ stock_array = np.array(list_of_lists)
 t_array = np.transpose(stock_array)
 df = pd.DataFrame(t_array, columns=['Stock Code', 'Company Name', 'Stock Price', 'Price Change (%)'])
 print(df)
+
+# def main():
+#     connection = pymysql.connect(host = 'localhost', port = 33066, user = 'root', password = 'password', database = 'FTSE-100')
+
+#     cursor = connection.cursor()
+#     for ticker in stock_code:
+#         cursor.execute(f'INSERT INTO security (ticker) VALUES ({ticker})')
+#     for company in company_name:
+#         cursor.execute(f'INSERT INTO security (company_name) VALUES ({company})')
+#     for price in stock_price:
+#         cursor.execute(f'INSERT INTO daily_price (stock_price) VALUES {price}')
+#     for percent in percent_change:
+#         cursor.execute(f'INSERT INTO daily_price (percent_change) VALUES {percent}')
+#     cursor.close()
+#     connection.close()
+
+# main()
+
+# if __name__ == '__main__':
+#     main()
+
+# def printname():
+#     print(__name__)
+
+# def insert_name():
+#     cursor.execute('INSERT INTO' customers (fname_column, sname_column) VALUES (fname, sname))
+
+#     , Company-name, Stock-price, Price-change

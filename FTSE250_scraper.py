@@ -29,8 +29,8 @@ def url_iterator():
         for i in rows:# Get company name and strip excess data.
             row = i.find_all('td')
             full_name = row[1].text.split()
-            full_name.pop(-1)
-            full_name.pop(-1)
+            full_name.pop(-1) # if full_name[-1] == 'ORD' full_name.pop(-1)
+            full_name.pop(-1)# if any 'ORD' in full_name: full_name.remove('ORD')
             stripped_name = ' '.join(full_name)
             company_name.append(stripped_name)
         for i in rows:# Get stock price.
